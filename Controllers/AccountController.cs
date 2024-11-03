@@ -20,7 +20,8 @@ namespace TodoApp.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.UserAccounts.ToList());
+            //return View(_context.UserAccounts.ToList());
+            return View();
         }
 
         public IActionResult SignUp()
@@ -76,9 +77,7 @@ namespace TodoApp.Controllers
                     // Success, create cookie
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.Email),
-                        new Claim("Name", user.FirstName),
-                        new Claim(ClaimTypes.Role, "User"),
+                        new Claim(ClaimTypes.Name, user.FirstName)                                            
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -97,7 +96,7 @@ namespace TodoApp.Controllers
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         [Authorize]

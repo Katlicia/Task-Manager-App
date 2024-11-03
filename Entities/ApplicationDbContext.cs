@@ -10,6 +10,6 @@ namespace TodoApp.Entities
         }
 
         public DbSet<UserAccount> UserAccounts { get; set; }
-
+        public DbSet<Task> Tasks { get; set; }
     }
 }
