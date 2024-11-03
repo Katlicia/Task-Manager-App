@@ -76,7 +76,8 @@ namespace TodoApp.Controllers
                     // Success, create cookie
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.FirstName)                                            
+                        new Claim(ClaimTypes.Name, user.FirstName),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

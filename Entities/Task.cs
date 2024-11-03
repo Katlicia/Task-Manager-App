@@ -12,15 +12,22 @@ namespace TodoApp.Entities
         public string Title { get; set; }
 
         [MaxLength(500, ErrorMessage = "Max 500 characters allowed.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
+        [Display(Name = "Due Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DueDate { get; set; }
 
-        public bool IsCompleted { get; set; }
+        [Display(Name = "Is Completed")]
+        public bool IsCompleted { get; set; } = false;
+
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Create Date")]
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         // Foreign keys for UserAccount
         public int UserId { get; set; }
         public UserAccount User { get; set; }
-
     }
 }

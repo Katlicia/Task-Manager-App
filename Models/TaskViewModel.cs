@@ -10,14 +10,11 @@ namespace TodoApp.Models
         public string Title { get; set; }
 
         [MaxLength(500, ErrorMessage = "Max 500 characters allowed.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Display(Name = "Due Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{}0:dd-MM-yyyy", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DueDate { get; set; }
-
-        [Display(Name = "Is Completed")]
-        public bool IsCompleted { get; set; }
     }
 }
