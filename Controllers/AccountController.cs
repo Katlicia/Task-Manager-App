@@ -20,7 +20,6 @@ namespace TodoApp.Controllers
 
         public IActionResult Index()
         {
-            //return View(_context.UserAccounts.ToList());
             return View();
         }
 
