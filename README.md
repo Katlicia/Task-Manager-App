@@ -1,6 +1,6 @@
 # Task Management Application
 
-A simple and efficient Todo application built with [insert framework/language, e.g., ASP.NET Core, React, etc.]. This application allows users to create, edit, and delete tasks, helping them manage their daily activities effectively.
+A simple and efficient Todo application built with ASP.NET Core. This application allows users to create, edit, and delete tasks, helping them manage their daily activities effectively.
 
 ## Features
 
