@@ -116,5 +116,41 @@ namespace TodoApp.Controllers
 
             return View(model);
         }
+
+        public IActionResult Delete(int id)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Tasks.Remove(task);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = $"{task.Title} task deleted successfully.";
+            }
+
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = $"An error occured while deleting the task.";
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
