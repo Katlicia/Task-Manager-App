@@ -1,0 +1,36 @@
+﻿<h2>Task Details</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>Description</th>
+            <td class="description-text">@Model.Description</td>
+        </tr>
+        <tr>
+            <th>Due Date</th>
+            <td>@Model.DueDate</td>
+        </tr>
+        <tr>
+            <th>Created Date</th>
+            <td>@Model.CreatedDate</td>
+        </tr>
+        <tr>
+            <th>Is Completed</th>
+            <td>@Model.IsCompleted</td>
+        </tr>
+    </table>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<style>
+    .description-text {
+        word-wrap: break-word;
+        white-space: normal;
+        max-width: 600px;
+    }
+</style>

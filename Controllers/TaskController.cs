@@ -49,7 +49,6 @@ namespace TodoApp.Controllers
                     _context.SaveChanges();
 
                     ModelState.Clear();
-                    //ViewBag.Message = $"{task.Title} task created successfully.";
                     TempData["SuccessMessage"] = $"{task.Title} task created successfully.";
                     return RedirectToAction("Index");
                 }
@@ -59,7 +58,6 @@ namespace TodoApp.Controllers
                     ModelState.AddModelError("", "An error occured while creating a task.");
                     return View(model);
                 }
-                //return View();
             }
 
             return View(model);
@@ -151,6 +149,17 @@ namespace TodoApp.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(int id)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
+
         }
     }
 }
