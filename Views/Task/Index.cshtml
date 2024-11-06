@@ -15,6 +15,26 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="FilterByDueDate" method="get">
+    <label for="dueDate">Due Date:</label>
+    <input type="date" id="dueDate" name="dueDate" value="@ViewData["SelectedDate"]" />
+    <button type="submit" class="btn btn-primary">Filter</button>
+    @if (!string.IsNullOrEmpty(ViewData["SelectedDate"] as string))
+    {
+        <a asp-action="Index" class="btn btn-secondary" style="margin-left: 5px;">Clear</a>
+    }
+</form>
+
+
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <table class="table">
     <thead>
         <tr>

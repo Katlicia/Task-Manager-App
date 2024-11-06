@@ -161,5 +161,25 @@ namespace TodoApp.Controllers
             return View(task);
 
         }
+
+        public IActionResult FilterByDueDate(DateTime? dueDate)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var tasks = _context.Tasks.Where(t => t.UserId == userId);
+
+            if (dueDate.HasValue)
+            {
+                tasks = tasks.Where(t => t.DueDate == dueDate.Value.Date);
+                ViewData["SelectedDate"] = dueDate.Value.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                ViewData["SelectedDate"] = "";
+            }
+
+            return View("Index", tasks.ToList());
+        }
+
+
     }
 }
