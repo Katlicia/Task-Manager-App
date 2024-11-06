@@ -18,8 +18,10 @@ namespace TodoApp.Controllers
             _context = applicationDbContext;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
+            ViewBag.Name = HttpContext.User.Identity.Name;
             return View();
         }
 
@@ -83,7 +85,7 @@ namespace TodoApp.Controllers
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                 
-                    return RedirectToAction("SecurePage");
+                    return RedirectToAction("Index");
                 }
                 else 
                 {
@@ -97,13 +99,6 @@ namespace TodoApp.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
-        }
-
-        [Authorize]
-        public IActionResult SecurePage()
-        {
-            ViewBag.Name = HttpContext.User.Identity.Name;
-            return View();
         }
 
         [Authorize]
@@ -149,7 +144,7 @@ namespace TodoApp.Controllers
                 _context.SaveChanges();
 
                 TempData["SuccessMessage"] = "Password changed succesfully.";
-                return RedirectToAction("SecurePage");
+                return RedirectToAction("Index");
 
             }
 
@@ -186,7 +181,7 @@ namespace TodoApp.Controllers
             catch (DbUpdateException)
             {
                 TempData["ErrorMessage"] = "An error occured while deleting this account.";
-                return RedirectToAction("SecurePage");
+                return RedirectToAction("Index");
             }
         }
 
