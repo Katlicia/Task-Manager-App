@@ -64,7 +64,6 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 - Models/: Defines the ViewModels used for data transfer between the UI and controllers, including data validation.
 - Entities/: Defines the data entities that map to the database tables, representing the core data structure of the application.
 - Views/: Contains the Razor views that render the UI.
-- Data/: Includes the database context used for interacting with the database using Entity Framework Core.
 - wwwroot/: Holds static files like CSS, JavaScript, and images.
 
 ## Contributing
