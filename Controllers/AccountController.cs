@@ -156,5 +156,39 @@ namespace TodoApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult DeleteAccount()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize]
+        public IActionResult DeleteAccountConfirmed()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = _context.UserAccounts.Find(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.UserAccounts.Remove(user);
+                _context.SaveChanges();
+                HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                TempData["SuccessMessage"] = "Your account has been deleted succesfully.";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = "An error occured while deleting this account.";
+                return RedirectToAction("SecurePage");
+            }
+        }
+
     }
 }
