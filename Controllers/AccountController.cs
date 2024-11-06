@@ -105,5 +105,56 @@ namespace TodoApp.Controllers
             ViewBag.Name = HttpContext.User.Identity.Name;
             return View();
         }
+
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var user = _context.UserAccounts.Find(userId);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                if (model.NewPassword == model.CurrentPassword)
+                {
+                    ModelState.AddModelError("", "Current password and new password can't be the same.");
+                    return View(model);
+                }
+
+                if (user.Password != model.CurrentPassword)
+                {
+                    ModelState.AddModelError("", "Current password is incorrect.");
+                    return View(model);
+                }
+
+
+                if (model.NewPassword != model.ConfirmedPassword)
+                {
+                    ModelState.AddModelError("", "The new password and confirmation password don't match.");
+                    return View(model);
+                }
+
+                user.Password = model.NewPassword;
+                _context.SaveChanges();
+
+                TempData["SuccessMessage"] = "Password changed succesfully.";
+                return RedirectToAction("SecurePage");
+
+            }
+
+            return View(model);
+        }
+
     }
 }
