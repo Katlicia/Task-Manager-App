@@ -7,7 +7,7 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 - Create new tasks
 - Edit existing tasks
 - Delete tasks with confirmation
-- Task due date management
+- Task due date management/filter
 - User-friendly interface
 
 ## Technologies Used
@@ -34,6 +34,23 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
    ```
    dotnet restore
    ```
+4. Add the first migration (for initial setup):
+   ```
+   dotnet ef migrations add InitialCreate
+   ```
+5. Update the database:
+   ```
+   dotnet ef database update
+   ```
+6. Build the project:
+   ```
+   dotnet build
+   ```
+7. Run the application:
+   ```
+   dotnet run
+   ```
+   
 ## Usage
 1. Start the application:
   ```
