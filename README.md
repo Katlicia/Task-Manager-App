@@ -7,6 +7,7 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 - Create new tasks
 - Edit existing tasks
 - Delete tasks with confirmation
+- Add users to tasks
 - Task due date management/filter
 - User-friendly interface
 
