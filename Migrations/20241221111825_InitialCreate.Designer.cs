@@ -12,8 +12,8 @@ using TodoApp.Entities;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241103155030_TaskModelUpdate")]
-    partial class TaskModelUpdate
+    [Migration("20241221111825_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,24 @@ namespace TodoApp.Migrations
                     b.ToTable("Tasks");
                 });
 
+            modelBuilder.Entity("TodoApp.Entities.TaskUser", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("CanEdit")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TaskId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TaskUsers");
+                });
+
             modelBuilder.Entity("TodoApp.Entities.UserAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -100,7 +118,7 @@ namespace TodoApp.Migrations
             modelBuilder.Entity("TodoApp.Entities.Task", b =>
                 {
                     b.HasOne("TodoApp.Entities.UserAccount", "User")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -108,9 +126,33 @@ namespace TodoApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TodoApp.Entities.TaskUser", b =>
+                {
+                    b.HasOne("TodoApp.Entities.Task", "Task")
+                        .WithMany("TaskUsers")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TodoApp.Entities.UserAccount", "User")
+                        .WithMany("TaskUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TodoApp.Entities.Task", b =>
+                {
+                    b.Navigation("TaskUsers");
+                });
+
             modelBuilder.Entity("TodoApp.Entities.UserAccount", b =>
                 {
-                    b.Navigation("Tasks");
+                    b.Navigation("TaskUsers");
                 });
 #pragma warning restore 612, 618
         }

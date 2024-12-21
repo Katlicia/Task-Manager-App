@@ -20,11 +20,53 @@
             <th>Is Completed</th>
             <td>@Model.IsCompleted</td>
         </tr>
+        <tr>
+            <th>Task Creator</th>
+            <td>
+                @if (Model.User != null)
+                {
+                    <span>@Model.User.FirstName</span>
+                    <span>@Model.User.LastName</span>
+                    <span>@Model.User.Email</span>
+                    }
+                else
+                {
+                    <span>Creator information not available</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Assigned Users</th>
+            <td>
+                @if (Model.TaskUsers != null && Model.TaskUsers.Count > 0)
+                {
+                <ul>
+                    @foreach (var taskUser in Model.TaskUsers)
+                    {
+                        <li>@taskUser.User.Email</li>
+                    }
+                </ul>
+                }
+                else
+                {
+                <span>No users assigned to this task.</span>
+                }
+
+            </td>
+        </tr>
     </table>
 
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
     <a asp-action="Index">Back to List</a>
+
+    <form asp-action="AssignUserToTask" method="post">
+        <input type="hidden" name="taskId" value="@Model.Id" />
+        <label for="email">Enter User Email:</label>
+        <input type="email" id="email" name="email" required placeholder="Enter user email" />
+        <button type="submit">Assign User</button>
+    </form>
+
 </div>
 
 <style>
@@ -34,3 +76,12 @@
         max-width: 600px;
     }
 </style>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}

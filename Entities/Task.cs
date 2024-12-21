@@ -25,9 +25,13 @@ namespace TodoApp.Entities
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Create Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-
+         
         // Foreign keys for UserAccount
         public int UserId { get; set; }
         public UserAccount User { get; set; }
+
+        // Relation with UserAccount
+        public ICollection<TaskUser> TaskUsers { get; set; }
+
     }
 }

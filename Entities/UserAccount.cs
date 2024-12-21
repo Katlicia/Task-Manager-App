@@ -25,7 +25,7 @@ namespace TodoApp.Entities
         [MaxLength(20, ErrorMessage = "Max 20 characters allowed.")]
         public string Password { get; set; }
 
-        // Others
-        public List<Task> Tasks { get; set; }
+        // Relation with Tasks
+        public ICollection<TaskUser> TaskUsers { get; set; }
     }
 }
