@@ -78,7 +78,8 @@ namespace TodoApp.Controllers
             {
                 Title = task.Title,
                 Description = task.Description,
-                DueDate = task.DueDate
+                DueDate = task.DueDate,
+                IsCompleted = task.IsCompleted
             };
 
             ViewData["TaskId"] = task.Id;
@@ -102,6 +103,7 @@ namespace TodoApp.Controllers
                 task.Title = model.Title;
                 task.Description = model.Description;
                 task.DueDate = model.DueDate;
+                task.IsCompleted = model.IsCompleted;
 
                 try
                 {
@@ -121,20 +123,31 @@ namespace TodoApp.Controllers
 
         public IActionResult Delete(int id)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            var task = _context.Tasks.Include(t => t.TaskUsers).FirstOrDefault(t => t.Id == id);
             if (task == null)
             {
-                return NotFound();
+                return NotFound("Task not found.");
             }
 
             _context.TaskUsers.RemoveRange(task.TaskUsers);
 
             _context.Tasks.Remove(task);
 
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Task deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the task.";
+                return RedirectToAction("Index");
+            }
 
-            return View(task);
+            return RedirectToAction("Index", "Task");
         }
+
+
 
         [HttpPost, ActionName("Delete")]
         [Authorize]
@@ -178,6 +191,31 @@ namespace TodoApp.Controllers
             ViewBag.Users = _context.UserAccounts.ToList();
 
             return View(task);
+        }
+
+        [HttpPost]
+        public IActionResult MarkAsCompleted(int id)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                TempData["ErrorMessage"] = "Task not found.";
+                return RedirectToAction("Index");
+            }
+
+            task.IsCompleted = true;
+            try
+            {
+                _context.Tasks.Update(task);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = $"{task.Title} marked as completed.";
+            }
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = "An error occurred while updating the task.";
+            }
+
+            return RedirectToAction("Index");
         }
 
 

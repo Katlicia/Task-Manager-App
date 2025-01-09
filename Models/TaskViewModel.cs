@@ -16,5 +16,8 @@ namespace TodoApp.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DueDate { get; set; }
+
+        [Display(Name = "Is Completed")]
+        public bool IsCompleted { get; set; }
     }
 }

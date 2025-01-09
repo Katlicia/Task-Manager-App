@@ -2,47 +2,89 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: bold;
+    color: #FFFFFF; /* Beyaz renk */
 }
 
 a {
-  color: #0077cc;
+    color: #DDA0DD; /* Açık mor */
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
+
+    a:hover {
+        color: #BA55D3; /* Daha koyu bir mor ton */
+        text-decoration: underline;
+    }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #800080; /* Mor */
+    border-color: #800080;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+    .btn-primary:hover {
+        background-color: #4B0082; /* Koyu mor */
+        border-color: #4B0082;
+    }
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #800080; /* Mor */
+    border-color: #4B0082;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #E6E6FA; /* Açık mor */
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #E6E6FA; /* Açık mor */
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Daha belirgin bir gölge */
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    background-color: #800080; /* Mor */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
+    button.accept-policy:hover {
+        background-color: #4B0082; /* Koyu mor */
+    }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: fixed; /* Changed from relative to fixed */
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: rgba(75, 0, 130, 0.8); /* Koyu mor opak */
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    z-index: 1000; /* Ensure it is above other elements */
+}
+
+@media (max-width: 768px) {
+    .footer {
+        line-height: 1.5;
+        padding: 1rem;
+    }
+
+    a.navbar-brand {
+        font-size: 1.25rem;
+    }
 }

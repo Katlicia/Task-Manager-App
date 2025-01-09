@@ -10,83 +10,155 @@
     </div>
 }
 
-<h2>Task List</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #6A0DAD, #9370DB); /* Mor tonları */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+        .container {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
 
-<form asp-action="FilterByDueDate" method="get">
-    <label for="dueDate">Due Date:</label>
-    <input type="date" id="dueDate" name="dueDate" value="@ViewData["SelectedDate"]" />
-    <button type="submit" class="btn btn-primary">Filter</button>
-    @if (!string.IsNullOrEmpty(ViewData["SelectedDate"] as string))
-    {
-        <a asp-action="Index" class="btn btn-secondary" style="margin-left: 5px;">Clear</a>
-    }
-</form>
+        .table {
+            color: #fff;
+            background-color: rgba(106, 13, 173, 0.1); /* Hafif mor arka plan */
+        }
 
+        .btn-primary {
+            background-color: #6A0DAD; /* Mor buton */
+            border-color: #6A0DAD;
+        }
 
+            .btn-primary:hover {
+                background-color: #9370DB; /* Açık mor hover */
+                border-color: #9370DB;
+            }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
+        .btn-secondary {
+            background-color: #9370DB; /* Açık mor */
+            border-color: #9370DB;
+        }
+
+            .btn-secondary:hover {
+                background-color: #6A0DAD; /* Koyu mor hover */
+                border-color: #6A0DAD;
+            }
+
+        .completed {
+            background-color: rgba(106, 90, 205, 0.2); /* Hafif mor (başarı) */
+        }
+
+        .not-completed {
+            background-color: rgba(128, 0, 128, 0.2); /* Koyu mor (tamamlanmamış) */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h2>Task List</h2>
+
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Create New</a>
+        </p>
+
+        <form asp-action="FilterByDueDate" method="get" class="mb-3">
+            <label for="dueDate" class="form-label">Due Date:</label>
+            <div class="d-flex">
+                <input type="date" id="dueDate" name="dueDate" value="@ViewData["SelectedDate"]" class="form-control me-2" />
+                <button type="submit" class="btn btn-primary">Filter</button>
+                @if (!string.IsNullOrEmpty(ViewData["SelectedDate"] as string))
+                {
+                    <a asp-action="Index" class="btn btn-secondary ms-2">Clear</a>
+                }
+            </div>
+        </form>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DueDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsCompleted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(item.IsCompleted ? "completed" : "not-completed")">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 50)
+                            {
+                                @item.Description.Substring(0, 50)
+                            }
+                            else
+                            {
+                                @item.Description
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DueDate)
+                        </td>
+                        <td>
+                            @(item.IsCompleted ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="Task" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-area="" asp-controller="Task" asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                            <a asp-area="" asp-controller="Task" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsCompleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 50)
-                {
-                    @item.Description.Substring(0, 50)
-                }
-                else
-                {
-                    @item.Description
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsCompleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                <a asp-area="" asp-controller="Task" asp-action="Edit" asp-route-id="@item.Id">Edit |</a>
-                <a asp-area="" asp-controller="Task" asp-action="Details" asp-route-id="@item.Id">Details |</a>
-                <a asp-area="" asp-controller="Task" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
