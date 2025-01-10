@@ -60,9 +60,9 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 2. Open your web browser and navigate to http://localhost:3000 (or the port your application runs on).
 3. You can now create, edit, and delete tasks.
 
-# Homepage
+## Homepage
 ![Homepage](wwwroot/shot1.PNG)
-# Tasks
+## Tasks
 ![Tasks](wwwroot/shot2.PNG)
 
 ## Project Structure:
