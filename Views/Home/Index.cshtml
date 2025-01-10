@@ -64,12 +64,10 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <!-- Kullanıcı giriş yapmışsa Task/Create sayfasına yönlendir -->
         <a href="/Task/Create" class="btn btn-custom mt-4">Get Started</a>
         }
         else
         {
- <!-- Kullanıcı giriş yapmamışsa Account/Login sayfasına yönlendir -->
         <a href="/Account/Login" class="btn btn-custom mt-4">Get Started</a>
         }
     </div>

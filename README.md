@@ -60,6 +60,11 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 2. Open your web browser and navigate to http://localhost:3000 (or the port your application runs on).
 3. You can now create, edit, and delete tasks.
 
+# Homepage
+![Homepage]("wwwroot/shot1.png")
+# Tasks
+![Tasks]("wwwroot/shot2.png")
+
 ## Project Structure:
 - Controllers/: Contains MVC controllers to handle user requests and return views.
 - Models/: Defines the ViewModels used for data transfer between the UI and controllers, including data validation.
