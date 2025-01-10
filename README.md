@@ -61,9 +61,9 @@ A simple and efficient Todo application built with ASP.NET Core. This applicatio
 3. You can now create, edit, and delete tasks.
 
 # Homepage
-![Homepage]("wwwroot/shot1.PNG")
+![Homepage](wwwroot/shot1.PNG)
 # Tasks
-![Tasks]("wwwroot/shot2.PNG")
+![Tasks](wwwroot/shot2.PNG)
 
 ## Project Structure:
 - Controllers/: Contains MVC controllers to handle user requests and return views.
